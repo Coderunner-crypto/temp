@@ -1,0 +1,7 @@
+tiktoken
+backoff
+openai
+futures
+youtube-transcript-api
+bottle
+paste
