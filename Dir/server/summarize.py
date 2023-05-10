@@ -74,6 +74,12 @@ def enable_cors(fn):
 
     return _enable_cors
 
+@route('/hello', method='GET')
+@enable_cors
+def hello():
+    response.headers['Content-Type'] = 'application/json'
+    return {'message': 'Hello, World!'}
+
 @route('/api/v1/summarize', method=['OPTIONS', 'POST'])
 @enable_cors
 def post_summarize():
@@ -92,7 +98,7 @@ def post_summarize():
     print(f'Summary of "{videoId}":\n{summary.strip()}')
     return { 'summary': summary.strip() }
 
-run(server='paste', host='localhost', port=8080)
+run(server='paste', host='0.0.0.0', port=8080)
 
 # print(summarize('juD99_sPWGU'))
 # print(summarize('UIy-WQCZd4M'))
