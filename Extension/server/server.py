@@ -34,7 +34,7 @@ def enable_cors(fn):
 
 
 client_dict = {}
-@app.route('/checkHistory', method=['OPTIONS', 'GET'])
+@app.route('/checkHistory', method=['OPTIONS', 'POST'])
 @enable_cors
 def checkHistory():
     videoId = request.json.get('videoId')
@@ -58,6 +58,13 @@ def checkHistory():
         print(e)
         response.status = 500
         return 'Internal server error\n'
+    
+
+@app.route('/test', method=['OPTIONS', 'GET'])
+@enable_cors
+def test():
+    return "Hello World";
+     
 
 
 @app.route('/websocket/', apply=[websocket])
@@ -117,7 +124,7 @@ def handle_websocket(client_socket):
             break
 
 
-@app.route('/api/v1/summarize', method=['OPTIONS', 'GET'])
+@app.route('/api/v1/summarize', method=['OPTIONS', 'POST'])
 @enable_cors
 def post_summarize():
     videoId = request.json.get('videoId')
