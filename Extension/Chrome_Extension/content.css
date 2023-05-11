@@ -1,0 +1,128 @@
+/* 1. Create global variables for text and background color */
+:root {
+	--color-background: white;
+	--color-border: #dbdbdb;
+	--color-btn-text: black;
+	--color-btn-background: #f2f2f2;
+	--color-background-hover: #ebebeb;
+	--color-background-active: #dbdbdb;
+	--color-background-title: white;
+	--color-title-text: black;
+	--color-close: gray;
+	--color-background-close: #f2f2f2;
+}
+
+/* 2. Add conditional styling for dark mode preference */
+@media (prefers-color-scheme: dark) {
+	/* Re-assign previous variables */
+	:root {
+		--color-background: #212121;
+		--color-border: #3f3f3f;
+		--color-btn-text: white; /* black => white */
+		--color-btn-background: #383838; /* white => black */
+		--color-background-hover: #464846;
+		--color-background-hover: #575656;
+		--color-background-title: transparent;
+		--color-title-text: white;
+		--color-close: #f2f2f2;
+		--color-background-close: transparent;
+	}
+}
+
+#YtGptSummaryBtn {
+	border: none;
+	border-radius: 30px;
+	margin-right: 8px;
+	font-family: "Roboto", "Arial", sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	padding-left: 15px;
+	padding-right: 15px;
+	color: var(--color-btn-text);
+	background-color: var(--color-btn-background);
+}
+
+#YtGptSummaryBtn:hover {
+	background-color: var(--color-background-hover);
+}
+
+#YtGptSummaryBtn:active {
+	background-color: var(--color-background-active);
+}
+
+#sDiv {
+	margin-bottom: 10px;
+	background-color: var(--color-background);
+	border-radius: 10px;
+}
+
+.summaryDiv {
+	height: 50vh;
+	border: solid;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: var(--color-border);
+}
+
+#summaryHeader {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title {
+	font-size: 2rem;
+	font-weight: 700;
+	background-color: var(--color-background-title);
+	font-family: "YouTube Sans", "Roboto", sans-serif;
+	color: var(--color-title-text);
+	padding: 10px;
+	border: none;
+	border-radius: 10px;
+}
+
+#closeSummary {
+	font-size: 2rem;
+	margin-right: 10px;
+	color: var(--color-close);
+	background-color: var(--color-background-close);
+	border: none;
+	border-radius: 30px;
+	text-align: center;
+}
+
+#closeSummary:hover {
+	background-color: gray;
+	color: gainsboro;
+}
+
+.loader {
+	margin: auto;
+	border: 5px solid #eaf0f6;
+	border-radius: 50%;
+	border-top: 5px solid gray;
+	width: 20px;
+	height: 20px;
+	animation: spinner 2s linear infinite;
+}
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+#summaryText {
+	font-family: "Roboto", "Arial", sans-serif;
+	font-size: 1.6rem;
+	padding: 10px;
+	padding-left: 20px;
+	color: var(--color-btn-text);
+	overflow: auto;
+	height: 85%;
+}

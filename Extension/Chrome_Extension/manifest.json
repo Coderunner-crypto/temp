@@ -1,0 +1,39 @@
+{
+    "name": "YTGPT",
+    "version": "0.0.0.3",
+    "description": "Get summaries direcly into your youtube. A poodleAI product.",
+    "permissions": ["tabs"],
+    "host_permissions": ["https://www.youtube.com/*"],
+
+    "background": {
+      "service_worker": "background.js",
+      "type": "module"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://www.youtube.com/*"],
+        "js": ["contentScript.js"],
+        "run_at": "document_end",
+        "css":        ["content.css"]
+
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "app.html"
+        ],
+        "matches": ["https://www.youtube.com/*"]
+      }
+    ],
+    "action": {
+      "default_icon": {
+        "16": "assets/ext-icon.png",
+        "24": "assets/ext-icon.png",
+        "32": "assets/ext-icon.png"
+      },
+      "default_title": "YTGPT",
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+}

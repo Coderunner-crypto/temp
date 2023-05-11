@@ -1,9 +1,9 @@
 FROM python:latest
 WORKDIR /usr
 
-ADD Dir /usr/Dir
-RUN pip3 install -r /usr/Dir/requirements.txt
+ADD Extension /usr/Extension
+RUN pip3 install -r /usr/Extension/requirements.txt
 EXPOSE 8080
 
 
-CMD [ "python3","/usr/Dir/server/summarize.py"]
+CMD [ "python3","/usr/Extension/server/server.py"]

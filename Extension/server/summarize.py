@@ -7,6 +7,10 @@ import openai
 import concurrent.futures
 from youtube_transcript_api import YouTubeTranscriptApi
 from bottle import post, request, run, response, static_file, route
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
@@ -29,9 +33,9 @@ def num_tokens_from_string(string, encoding_name):
 
 def simple_summarize(text):
     # print(num_tokens_from_string(text, 'gpt2'))
-    prompt = text + '\n\n' + 'Summarize the above text'
+    prompt = text + '\n\n' + 'Summarize the above text and return only the summary, nothing else. Also tell whether thr video is a clickbait or not. Separate the clickbait answer form the summary by $ symbol.'
     res = completions_with_backoff(
-        model="text-davinci-003",
+        model="text-davinci-002",
         prompt=prompt,
         max_tokens=250,
         temperature=0
@@ -54,7 +58,8 @@ def recursive_summarize(text):
 
 def summarize(video_id):
     transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-    transcript = transcript_list.find_transcript(['en']).fetch()
+    transcript = transcript_list.find_transcript(['en', 'en-IN']).fetch()
+    print(transcript)
     text = ' '.join(map(lambda x: x['text'], transcript))
     n = num_tokens_from_string(text, 'gpt2')
     if n > 3700:
@@ -74,37 +79,3 @@ def enable_cors(fn):
 
     return _enable_cors
 
-@route('/hello', method='GET')
-@enable_cors
-def hello():
-    response.headers['Content-Type'] = 'application/json'
-    return {'message': 'Hello, World!'}
-
-@route('/api/v1/summarize', method=['OPTIONS', 'POST'])
-@enable_cors
-def post_summarize():
-    videoId = request.json.get('videoId')
-    if not videoId:
-        print('No video id')
-        response.status = 500
-        return 'Internal server error\n'
-    try:
-        print(f'Received request to summarize "{videoId}"')
-        summary = summarize(videoId)
-    except Exception as e:
-        print(e)
-        response.status = 500
-        return 'Internal server error\n'
-    print(f'Summary of "{videoId}":\n{summary.strip()}')
-    return { 'summary': summary.strip() }
-
-run(server='paste', host='0.0.0.0', port=8080)
-
-# print(summarize('juD99_sPWGU'))
-# print(summarize('UIy-WQCZd4M'))
-# print(summarize('-wIt_WsJGfw'))
-# print(summarize('5eK5A_43pkE'))
-
-#Create a api call for checking if the video is clickbait or not
-
-#Create socket for chat feature
